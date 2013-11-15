@@ -11,3 +11,8 @@ def formalwear_form_for(*args, &block)
   options[:html].reverse_merge! :role => 'form'  
   form_for(*(args + [options]), &block)
 end
+
+def formalwear_fields_for(record_name, record_object = nil, options = {}, &block)
+  options.merge!(:builder => Formalwear::FormBuilder)
+  fields_for(record_name, record_object, options, &block)
+end

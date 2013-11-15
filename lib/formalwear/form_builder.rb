@@ -3,6 +3,11 @@ require 'action_view/helpers'
 
 class Formalwear::FormBuilder < ActionView::Helpers::FormBuilder
 
+  def formalwear_fields_for(record_name, record_object = nil, options = {}, &block)
+    options.merge!(:builder => Formalwear::FormBuilder)
+    fields_for(record_name, record_object, options, &block)
+  end
+
   def group(options = nil)
     options ||= {}
     classes = merge_classes( options[:class], 'form-group')
