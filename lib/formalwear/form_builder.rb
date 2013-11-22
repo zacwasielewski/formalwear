@@ -56,6 +56,21 @@ class Formalwear::FormBuilder < ActionView::Helpers::FormBuilder
     super
   end
 
+  def select(method, choices, options = nil, html_options = nil)
+    options ||= {}
+    html_options ||= {}
+    classes = merge_classes( html_options[:class], 'form-control')
+    html_options.reverse_merge! :class => classes
+    super
+  end
+
+  def text_area(method, options = nil)
+    options ||= {}
+    classes = merge_classes( options[:class], 'form-control')
+    options.reverse_merge! :class => classes
+    super
+  end
+
   def text_field_group(method, text = nil, options = nil, label_options = nil, control_options = nil)
     options         ||= {}
     label_options   ||= {}
@@ -123,6 +138,55 @@ class Formalwear::FormBuilder < ActionView::Helpers::FormBuilder
         html += @template.content_tag(:div, nil, { :class => control_wrapper_class }) { password_field(method, control_options) }
       else
         html += password_field(method, control_options)
+      end
+      html.html_safe
+    end
+  end
+
+  def select_group(method, text = nil, choices = nil, options = nil, html_options = nil, label_options = nil, control_options = nil)
+    options         ||= {}
+    html_options    ||= {}
+    label_options   ||= {}
+    control_options ||= {}
+    if label_grid = label_options.delete(:grid)
+      classes = merge_classes( label_options[:class], grid_classes(label_grid))
+      label_options[:class] = classes
+    end
+    if control_grid = control_options.delete(:grid)
+      classes = merge_classes( control_options[:class], grid_classes(control_grid))
+      control_wrapper_class = classes
+    end
+    group(options) do
+      html = ""
+      html += label(method, text, label_options)
+      if control_grid
+        html += @template.content_tag(:div, nil, { :class => control_wrapper_class }) { select(method, choices, options, html_options) }
+      else
+        html += select(method, choices, options, html_options)
+      end
+      html.html_safe
+    end
+  end
+
+  def text_area_group(method, text = nil, options = nil, label_options = nil, control_options = nil)
+    options         ||= {}
+    label_options   ||= {}
+    control_options ||= {}
+    if label_grid = label_options.delete(:grid)
+      classes = merge_classes( label_options[:class], grid_classes(label_grid))
+      label_options[:class] = classes
+    end
+    if control_grid = control_options.delete(:grid)
+      classes = merge_classes( control_options[:class], grid_classes(control_grid))
+      control_wrapper_class = classes
+    end
+    group(options) do
+      html = ""
+      html += label(method, text, label_options)
+      if control_grid
+        html += @template.content_tag(:div, nil, { :class => control_wrapper_class }) { text_area(method, control_options) }
+      else
+        html += text_area(method, control_options)
       end
       html.html_safe
     end
