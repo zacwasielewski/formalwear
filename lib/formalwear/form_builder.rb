@@ -26,7 +26,7 @@ class Formalwear::FormBuilder < ActionView::Helpers::FormBuilder
     super
   end
 
-  def static(options = nil, &block )
+  def static(options = nil, &block)
     options = {:class => 'form-control-static'}
     @template.content_tag(:p, nil, options) do
       if block_given?
@@ -38,21 +38,21 @@ class Formalwear::FormBuilder < ActionView::Helpers::FormBuilder
   def text_field(method, options = nil)
     options ||= {}
     classes = merge_classes( options[:class], 'form-control')
-    options.reverse_merge! :class => classes
+    options.merge! :class => classes
     super
   end
 
   def email_field(method, options = nil)
     options ||= {}
     classes = merge_classes( options[:class], 'form-control')
-    options.reverse_merge! :class => classes
+    options.merge! :class => classes
     super
   end
   
   def password_field(method, options = nil)
     options ||= {}
     classes = merge_classes( options[:class], 'form-control')
-    options.reverse_merge! :class => classes
+    options.merge! :class => classes
     super
   end
 
@@ -60,14 +60,14 @@ class Formalwear::FormBuilder < ActionView::Helpers::FormBuilder
     options ||= {}
     html_options ||= {}
     classes = merge_classes( html_options[:class], 'form-control')
-    html_options.reverse_merge! :class => classes
+    html_options.merge! :class => classes
     super
   end
 
   def text_area(method, options = nil)
     options ||= {}
     classes = merge_classes( options[:class], 'form-control')
-    options.reverse_merge! :class => classes
+    options.merge! :class => classes
     super
   end
 
