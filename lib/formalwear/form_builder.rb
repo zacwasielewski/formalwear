@@ -8,7 +8,7 @@ class Formalwear::FormBuilder < ActionView::Helpers::FormBuilder
     fields_for(record_name, record_object, options, &block)
   end
 
-  def group(options = nil)
+  def group(options = nil, &block)
     options ||= {}
     classes = merge_classes( options[:class], 'form-group')
     options.merge!( :class => classes )
@@ -26,7 +26,7 @@ class Formalwear::FormBuilder < ActionView::Helpers::FormBuilder
     super
   end
 
-  def static
+  def static(options = nil, &block )
     options = {:class => 'form-control-static'}
     @template.content_tag(:p, nil, options) do
       if block_given?
